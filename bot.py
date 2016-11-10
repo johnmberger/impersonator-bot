@@ -10,7 +10,7 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
     # holds previously-commented on calls
-    already_done = set()
+    already_done = {}
 
     for submission in r.get_subreddit('test').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
