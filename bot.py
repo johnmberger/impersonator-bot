@@ -9,7 +9,9 @@ r = praw.Reddit(user_agent='reddit impersonator 0.1')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
+    # holds previously-commented on calls
     already_done = set()
+
     for submission in r.get_subreddit('test').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         for comment in flat_comments:
@@ -17,9 +19,8 @@ while True:
             commentCheck = comment.body.split()
 
             call = commentCheck[0]
-            comment_id = comment.id
 
-            if call == "ImpersonatorBot!" and comment_id not in already_done:
+            if comment.id not in already_done and call == "ImpersonatorBot!":
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
@@ -38,7 +39,7 @@ while True:
 
                 elif sentence:
                     comment.reply(sentence)
-                    already_done.add(comment_id)
+                    already_done.add(comment.id)
 
                 else:
-                    already_done.add(comment_id)
+                    already_done.add(comment.id)
