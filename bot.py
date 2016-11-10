@@ -10,7 +10,7 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
     # holds previously-commented on calls
-    already_done = {"done"}
+    already_done = []
 
     for submission in r.get_subreddit('test').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
@@ -20,7 +20,7 @@ while True:
 
             call = commentCheck[0]
 
-            if all([comment.id not in already_done, call == "ImpersonatorBot!"]):
+            if all([already_done.indexOf(comment.id) > -1, call == "ImpersonatorBot!"]):
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
@@ -41,11 +41,11 @@ while True:
 
                 elif sentence:
                     comment.reply(sentence)
-                    already_done.add(comment.id)
+                    already_done.insert(0, comment.id)
                     print ('posted: ' + comment.id)
                     print(already_done)
-                    print(comment.id not in already_done)
+                    print(already_done.indexOf(comment.id) > -1)
 
                 else:
-                    already_done.add(comment.id)
+                    already_done.insert(0, comment.id)
                     print ('didnt post but added: ' + comment.id)
