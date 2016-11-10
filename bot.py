@@ -45,7 +45,7 @@ while True:
 
                 elif sentence:
                     comment.reply(sentence)
-                    already_done.insert(0, comment.id)
+                    already_done.append(comment.id)
                     print ('posted: ' + comment.id)
                     print(comment.id in already_done)
 
