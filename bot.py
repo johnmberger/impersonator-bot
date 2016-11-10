@@ -13,13 +13,16 @@ while True:
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         already_done = set()
         for comment in flat_comments:
+            time.sleep(1)
 
             commentCheck = comment.body.split()
 
             call = commentCheck[0]
 
-            if call == "ImpersonatorBot!":
+            if call == "ImpersonatorBot!" and comment.id not in already_done:
                 author = commentCheck[1]
+
+                time.sleep(10)
 
                 user = r.get_redditor(author)
                 comments = ''
@@ -38,5 +41,3 @@ while True:
                 elif sentence:
                     comment.reply(sentence)
                     already_done.add(comment.id)
-
-    time.sleep(420)
