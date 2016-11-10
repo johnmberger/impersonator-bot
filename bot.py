@@ -19,8 +19,11 @@ while True:
             commentCheck = comment.body.split()
 
             call = commentCheck[0]
+            
+            if comment.id in already_done:
+                print ('broken: already commented')
 
-            if (not (comment.id in already_done)) and call == "ImpersonatorBot!":
+            elif call == "ImpersonatorBot!":
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
@@ -37,7 +40,7 @@ while True:
                 if sentence == None:
                     print ('whoops')
                     print(already_done)
-                    print(comment.id not in already_done)
+                    print(comment.id in already_done)
 
                 elif sentence:
                     comment.reply(sentence)
