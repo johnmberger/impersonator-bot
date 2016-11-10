@@ -5,6 +5,7 @@ import praw
 
 r = praw.Reddit(user_agent='reddit impersonator 0.1')
 
+# reddit login
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
