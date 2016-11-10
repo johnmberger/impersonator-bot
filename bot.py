@@ -36,12 +36,14 @@ while True:
 
                 if sentence == None:
                     print ('whoops')
+                    print(already_done)
                     print(comment.id not in already_done)
 
                 elif sentence:
                     comment.reply(sentence)
                     already_done.add(comment.id)
                     print ('posted: ' + comment.id)
+                    print(already_done)
                     print(comment.id not in already_done)
 
                 else:
