@@ -54,5 +54,5 @@ while True:
                         print ('something went wrong: ' + comment.id)
 
                 else:
-                    comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + '^^beep boop. I\'m a bot. Let /u/CommodoreObvious know if something is wonky')
+                    comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + '^^beep^^boop.^^I\'m^^a^^bot. ^^Let^^/u/CommodoreObvious^^know^^if^^something^^is^^wonky')
                     already_done.append(comment.id)
