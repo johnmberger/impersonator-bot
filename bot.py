@@ -12,11 +12,16 @@ while True:
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         already_done = set()
         for comment in flat_comments:
-            commenter = comment.author
-            if comment.body == "ImpersonatorBot!":
-                print(comment.author)
 
-                user = r.get_redditor(commenter)
+            commentCheck = comment.body.split()
+
+            call = commentCheck[0]
+            author = commentCheck[1]
+
+            if call == "ImpersonatorBot!":
+                print(author)
+
+                user = r.get_redditor(author)
                 comments = ''
 
                 for comment in user.get_comments(limit=400):
@@ -27,7 +32,8 @@ while True:
                 text_model = markovify.Text(comments)
                 sentence = text_model.make_sentence()
 
-                comment.reply(sentence)
+                if len(sentence):
+                    comment.reply(sentence)
 
                 already_done.add(comment.id)
     time.sleep(15)
