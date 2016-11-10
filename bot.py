@@ -17,7 +17,7 @@ while True:
 
             call = commentCheck[0]
 
-            if call == "ImpersonatorBot!":
+            if call == "ImpersonatorBot":
                 author = commentCheck[1]
                 print(author)
 
