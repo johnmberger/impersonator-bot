@@ -13,9 +13,10 @@ r = praw.Reddit(user_agent='reddit impersonator 0.1')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
-    for submission in r.get_subreddit('ImpersonatorBot').get_hot(limit=5):
+    for submission in r.get_subreddit('test').get_hot(limit=5):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         already_done = set()
+        print(flat_comments)
         for comment in flat_comments:
             if comment.body == "ImpersonatorBot!":
                 print (comment)
