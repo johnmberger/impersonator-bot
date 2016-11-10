@@ -18,8 +18,9 @@ while True:
         already_done = set()
         print(flat_comments)
         for comment in flat_comments:
+            commenter = comment.author
+            print (commenter)
             if comment.body == "ImpersonatorBot!":
-                print (comment)
                 comment.reply('yo!')
                 already_done.add(comment.id)
     time.sleep(100)
