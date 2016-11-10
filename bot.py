@@ -20,7 +20,7 @@ while True:
 
             call = commentCheck[0]
 
-            if (comment.id not in already_done) and call == "ImpersonatorBot!":
+            if (not (comment.id in already_done)) and call == "ImpersonatorBot!":
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
