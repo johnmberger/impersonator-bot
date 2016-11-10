@@ -19,11 +19,13 @@ while True:
             commentCheck = comment.body.split()
 
             call = commentCheck[0]
-            
-            if comment.id in already_done:
+
+            if (comment.id in already_done):
                 print ('broken: already commented')
 
             elif call == "ImpersonatorBot!":
+                print('passed initial test')
+                print (comment.id in already_done)
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
@@ -39,14 +41,12 @@ while True:
 
                 if sentence == None:
                     print ('whoops')
-                    print(already_done)
                     print(comment.id in already_done)
 
                 elif sentence:
                     comment.reply(sentence)
                     already_done.insert(0, comment.id)
                     print ('posted: ' + comment.id)
-                    print(already_done)
                     print(comment.id in already_done)
 
                 else:
