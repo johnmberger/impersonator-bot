@@ -27,6 +27,7 @@ while True:
                 for comment in user.get_comments(limit=400):
                     comments = comments + ' ' + comment.body
 
+                comments = unicodeData.encode(comments, 'ascii', 'ignore')
                 print(comments)
 
                 text_model = markovify.Text(comments)
