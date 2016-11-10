@@ -40,7 +40,7 @@ while True:
                 elif sentence:
                     comment.reply(sentence)
                     already_done.add(comment.id)
-                    print ('posted: ' + commend.id)
+                    print ('posted: ' + comment.id)
 
                 else:
                     already_done.add(comment.id)
