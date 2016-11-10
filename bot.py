@@ -20,7 +20,7 @@ while True:
 
             call = commentCheck[0]
 
-            if comment.id not in already_done and call == "ImpersonatorBot!":
+            if all([comment.id not in already_done, call == "ImpersonatorBot!"]):
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
@@ -36,11 +36,13 @@ while True:
 
                 if sentence == None:
                     print ('whoops')
+                    print(comment.id not in already_done)
 
                 elif sentence:
                     comment.reply(sentence)
                     already_done.add(comment.id)
                     print ('posted: ' + comment.id)
+                    print(comment.id not in already_done)
 
                 else:
                     already_done.add(comment.id)
