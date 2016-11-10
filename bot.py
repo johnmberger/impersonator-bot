@@ -15,7 +15,10 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 while True:
     for submission in r.get_subreddit('ImpersonatorBot').get_hot(limit=5):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
+        already_done = set()
         for comment in flat_comments:
             if comment.body == "ImpersonatorBot!":
-                reply_world('yo!')
+                print (comment)
+                comment.reply('yo!')
+                already_done.add(comment.id)
     time.sleep(100)
