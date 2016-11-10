@@ -35,7 +35,7 @@ while True:
                 if sentence == None:
                     print('whoops')
 
-                else if sentence:
+                elif sentence:
                     comment.reply(sentence)
 
                 already_done.add(comment.id)
