@@ -35,4 +35,4 @@ while True:
                     comment.reply(sentence)
 
                 already_done.add(comment.id)
-    time.sleep(15)
+    time.sleep(420)
