@@ -41,7 +41,7 @@ while True:
                     print ('markovify failed, will try again')
 
                 elif sentence:
-                    comment.reply(sentence + '*****' + 'beep boop. I\'m a bot.')
+                    comment.reply(sentence + ' ***** ' + 'beep boop. I\'m a bot.')
                     already_done.append(comment.id)
                     print ('posted: ' + comment.id)
 
