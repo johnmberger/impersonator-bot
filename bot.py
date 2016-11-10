@@ -7,10 +7,10 @@ r = praw.Reddit(user_agent='reddit impersonator 0.1')
 
 # reddit login
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
+already_done = []
 
 while True:
     # holds previously-commented on calls
-    already_done = []
 
     for submission in r.get_subreddit('test').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
