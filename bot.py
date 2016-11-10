@@ -1,15 +1,10 @@
 import os
 import time
-
+import markovify
 import praw
 
-# reddit really wants you to use a unique user agent string.
-# see https://github.com/reddit/reddit/wiki/API#rules
 r = praw.Reddit(user_agent='reddit impersonator 0.1')
-# login isn't strictly needed here since we're not
-# posting, commenting, etc.
-# you'll need to set the REDDIT_USER and REDDIT_PASS
-# environment variables before you run this bot
+
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
@@ -19,8 +14,17 @@ while True:
         print(flat_comments)
         for comment in flat_comments:
             commenter = comment.author
-            print (commenter)
             if comment.body == "ImpersonatorBot!":
-                comment.reply('yo!')
+                user = r.get_redditor(commenter)
+                comments = ''
+
+                for comment in user.get_comments(limit=400):
+                    comments = comments + ' ' + comment.body
+
+                text_model = markovify.Text(comments)
+                sentence = text_model.make_sentence()
+
+                comment.reply(sentence)
+
                 already_done.add(comment.id)
-    time.sleep(100)
+    time.sleep(500)
