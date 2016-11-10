@@ -9,9 +9,9 @@ r = praw.Reddit(user_agent='reddit impersonator 0.1')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 while True:
+    already_done = set()
     for submission in r.get_subreddit('test').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
-        already_done = set()
         for comment in flat_comments:
 
             commentCheck = comment.body.split()
