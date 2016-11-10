@@ -35,11 +35,13 @@ while True:
                 sentence = text_model.make_sentence()
 
                 if sentence == None:
-                    print('whoops')
+                    print ('whoops')
 
                 elif sentence:
                     comment.reply(sentence)
                     already_done.add(comment.id)
+                    print ('posted: ' + commend.id)
 
                 else:
                     already_done.add(comment.id)
+                    print ('didnt post but added: ' + comment.id)
