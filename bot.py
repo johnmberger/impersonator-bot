@@ -11,10 +11,10 @@ while True:
     for submission in r.get_subreddit('test').get_hot(limit=5):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         already_done = set()
-        print(flat_comments)
         for comment in flat_comments:
             commenter = comment.author
             if comment.body == "ImpersonatorBot!":
+                print(comment.author)
                 user = r.get_redditor(commenter)
                 comments = ''
 
@@ -27,4 +27,4 @@ while True:
                 comment.reply(sentence)
 
                 already_done.add(comment.id)
-    time.sleep(500)
+    time.sleep(15)
