@@ -37,6 +37,6 @@ while True:
 
                 elif sentence:
                     comment.reply(sentence)
+                    already_done.add(comment.id)
 
-                already_done.add(comment.id)
     time.sleep(420)
