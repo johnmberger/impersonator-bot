@@ -12,7 +12,7 @@ already_done = []
 while True:
     # holds previously-commented on calls
 
-    for submission in r.get_subreddit('python').get_hot(limit=10):
+    for submission in r.get_subreddit('test').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         for comment in flat_comments:
 
@@ -41,7 +41,7 @@ while True:
                     print ('markovify failed, will try again')
 
                 elif sentence:
-                    comment.reply(sentence)
+                    comment.reply(sentence + '*****' + 'beep boop. I\'m a bot.')
                     already_done.append(comment.id)
                     print ('posted: ' + comment.id)
 
