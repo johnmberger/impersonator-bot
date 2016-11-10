@@ -17,9 +17,8 @@ while True:
 
             call = commentCheck[0]
 
-            if call == "ImpersonatorBot":
+            if call == "ImpersonatorBot!":
                 author = commentCheck[1]
-                print(author)
 
                 user = r.get_redditor(author)
                 comments = ''
@@ -28,7 +27,6 @@ while True:
                     comments = comments + ' ' + historicalComment.body
 
                 comments = comments.encode('ascii', 'ignore')
-                print(comments)
 
                 text_model = markovify.Text(comments)
                 sentence = text_model.make_sentence()
