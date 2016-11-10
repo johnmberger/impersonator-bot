@@ -32,7 +32,10 @@ while True:
                 text_model = markovify.Text(comments)
                 sentence = text_model.make_sentence()
 
-                if len(sentence):
+                if sentence == None:
+                    print('whoops')
+
+                else if sentence:
                     comment.reply(sentence)
 
                 already_done.add(comment.id)
