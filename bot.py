@@ -20,7 +20,7 @@ while True:
 
             call = commentCheck[0]
 
-            if all([already_done.indexOf(comment.id) > -1, call == "ImpersonatorBot!"]):
+            if all([already_done.index(comment.id) > -1, call == "ImpersonatorBot!"]):
                 author = commentCheck[1]
 
                 user = r.get_redditor(author)
@@ -44,7 +44,7 @@ while True:
                     already_done.insert(0, comment.id)
                     print ('posted: ' + comment.id)
                     print(already_done)
-                    print(already_done.indexOf(comment.id) > -1)
+                    print(already_done.index(comment.id) > -1)
 
                 else:
                     already_done.insert(0, comment.id)
