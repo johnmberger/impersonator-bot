@@ -15,11 +15,14 @@ while True:
             commenter = comment.author
             if comment.body == "ImpersonatorBot!":
                 print(comment.author)
+
                 user = r.get_redditor(commenter)
                 comments = ''
 
                 for comment in user.get_comments(limit=400):
                     comments = comments + ' ' + comment.body
+
+                print(comments)
 
                 text_model = markovify.Text(comments)
                 sentence = text_model.make_sentence()
