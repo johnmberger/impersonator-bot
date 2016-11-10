@@ -24,7 +24,7 @@ while True:
                 user = r.get_redditor(author)
                 comments = ''
 
-                for historicalComment in user.get_comments(limit=400):
+                for historicalComment in user.get_comments(limit=100):
                     comments = comments + ' ' + historicalComment.body
 
                 comments = comments.encode('ascii', 'ignore')
