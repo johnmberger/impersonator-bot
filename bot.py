@@ -39,3 +39,6 @@ while True:
                 elif sentence:
                     comment.reply(sentence)
                     already_done.add(comment_id)
+
+                else:
+                    already_done.add(comment_id)
