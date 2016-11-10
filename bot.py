@@ -16,9 +16,9 @@ while True:
             commentCheck = comment.body.split()
 
             call = commentCheck[0]
-            author = commentCheck[1]
 
             if call == "ImpersonatorBot!":
+                author = commentCheck[1]
                 print(author)
 
                 user = r.get_redditor(author)
