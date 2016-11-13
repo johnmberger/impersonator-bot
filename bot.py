@@ -16,7 +16,7 @@ signature = '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^kno
 
 while True:
 
-    for submission in r.get_subreddit('ImpersonatorBot').get_hot(limit=10):
+    for submission in r.get_subreddit('impersonatorbot').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         for comment in flat_comments:
 
