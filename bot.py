@@ -83,6 +83,7 @@ while True:
                         SQL = ("INSERT INTO posts (id) VALUES (%s);")
                         cur.execute(SQL, data)
                         conn.commit()
+                        break
 
                     if sentence:
                         # add reply
