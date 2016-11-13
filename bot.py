@@ -29,7 +29,7 @@ r = praw.Reddit(user_agent='reddit impersonator 1.0')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 # holds previously-commented on calls
-cur.execute("SELECT * FROM test")
+cur.execute("SELECT * FROM posts")
 records = cur.fetchall()
 
 # bot signature
@@ -38,7 +38,7 @@ signature = '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^kno
 while True:
 
     # grab previously-commented-on posts
-    cur.execute("SELECT * FROM test")
+    cur.execute("SELECT * FROM posts")
     records = cur.fetchall()
 
     for submission in r.get_subreddit('impersonatorbot').get_hot(limit=10):
