@@ -1,20 +1,45 @@
 import os
 import time
+
 import markovify
+
 import praw
 
+import psycopg2
+import urlparse
+
+# database connection
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
+
+cur = conn.cursor()
+
+# reddit api wrapper connection
 r = praw.Reddit(user_agent='reddit impersonator 1.0')
 
 # reddit login
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 # holds previously-commented on calls
-already_done = []
+cur.execute("SELECT * FROM test")
+records = cur.fetchall()
 
 # bot signature
 signature = '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^know ^^if ^^something ^^is ^^wonky'
 
 while True:
+
+    # grab previously-commented-on posts
+    cur.execute("SELECT * FROM test")
+    records = cur.fetchall()
 
     for submission in r.get_subreddit('impersonatorbot').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
@@ -24,7 +49,7 @@ while True:
 
             call = commentCheck[0]
 
-            if (comment.id in already_done):
+            if (comment.id,) in records:
                 continue
 
             elif call == "ImpersonatorBot!":
@@ -48,14 +73,43 @@ while True:
                         print ('markovify failed, will try again')
 
                     elif sentence:
+                        # add reply
                         comment.reply(sentence + '\n\n ******* \n\n' + signature)
-                        already_done.append(comment.id)
+
+                        # post to db
+                        data = [comment.id]
+                        SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                        cur.execute(SQL, data)
+                        conn.commit()
+
+                        # grab previously-commented-on posts
+                        cur.execute("SELECT * FROM posts")
+                        records = cur.fetchall()
+
                         print ('posted: ' + comment.id)
 
                     else:
-                        already_done.insert(0, comment.id)
+                        # post to db
+                        data = [comment.id]
+                        SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                        cur.execute(SQL, data)
+                        conn.commit()
+
+                        # grab previously-commented-on posts
+                        cur.execute("SELECT * FROM posts")
+                        records = cur.fetchall()
+
                         print ('something went wrong: ' + comment.id)
 
                 else:
                     comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
-                    already_done.append(comment.id)
+
+                    # post to db
+                    data = [comment.id]
+                    SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                    cur.execute(SQL, data)
+                    conn.commit()
+
+                    # grab previously-commented-on posts
+                    cur.execute("SELECT * FROM posts")
+                    records = cur.fetchall()
