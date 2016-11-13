@@ -11,9 +11,12 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 # holds previously-commented on calls
 already_done = []
 
+# bot signature
+signature = '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^know ^^if ^^something ^^is ^^wonky'
+
 while True:
 
-    for submission in r.get_subreddit('test').get_hot(limit=10):
+    for submission in r.get_subreddit('ImpersonatorBot').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
         for comment in flat_comments:
 
@@ -45,7 +48,7 @@ while True:
                         print ('markovify failed, will try again')
 
                     elif sentence:
-                        comment.reply(sentence + '\n\n ******* \n\n' + '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^know ^^if ^^something ^^is ^^wonky')
+                        comment.reply(sentence + '\n\n ******* \n\n' + signature)
                         already_done.append(comment.id)
                         print ('posted: ' + comment.id)
 
@@ -54,5 +57,5 @@ while True:
                         print ('something went wrong: ' + comment.id)
 
                 else:
-                    comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^know ^^if ^^something ^^is ^^wonky')
+                    comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
                     already_done.append(comment.id)
