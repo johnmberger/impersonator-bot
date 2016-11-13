@@ -73,8 +73,7 @@ while True:
 
                         if sentence == None:
                             print ('markovify failed, will try again ' + comment.id)
-
-                        continue
+                            break
 
                     except:
 
@@ -84,8 +83,6 @@ while True:
                         SQL = ("INSERT INTO posts (id) VALUES (%s);")
                         cur.execute(SQL, data)
                         conn.commit()
-
-                        continue
 
                     if sentence:
                         # add reply
