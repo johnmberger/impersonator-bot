@@ -61,16 +61,22 @@ while True:
                     user = r.get_redditor(author)
                     comments = ''
 
-                    for historicalComment in user.get_comments(limit=100):
-                        comments = comments + ' ' + historicalComment.body
+                    try:
 
-                    comments = comments.encode('ascii', 'ignore')
+                        for historicalComment in user.get_comments(limit=100):
+                            comments = comments + ' ' + historicalComment.body
 
-                    text_model = markovify.Text(comments)
-                    sentence = text_model.make_sentence()
+                        comments = comments.encode('ascii', 'ignore')
 
-                    if sentence == None:
-                        print ('markovify failed, will try again')
+                        text_model = markovify.Text(comments)
+                        sentence = text_model.make_sentence()
+
+                        if sentence == None:
+                            print ('markovify failed, will try again')
+
+                    except:
+                        
+                        print ('bad username')
 
                     elif sentence:
                         # add reply
