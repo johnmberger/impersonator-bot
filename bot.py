@@ -72,7 +72,7 @@ while True:
                         sentence = text_model.make_sentence()
 
                         if sentence == None:
-                            print ('markovify failed, will try again')
+                            print ('markovify failed, will try again ' + comment.id)
 
                         continue
 
