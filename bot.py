@@ -84,10 +84,10 @@ while True:
                         SQL = ("INSERT INTO posts (id) VALUES (%s);")
                         cur.execute(SQL, data)
                         conn.commit()
-                        
+
                         continue
 
-                    elif sentence:
+                    if sentence:
                         # add reply
                         comment.reply(sentence + '\n\n ******* \n\n' + signature)
 
@@ -116,15 +116,15 @@ while True:
 
                         print ('something went wrong: ' + comment.id)
 
-                else:
-                    comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
+            else:
+                comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
 
-                    # post to db
-                    data = [comment.id]
-                    SQL = ("INSERT INTO posts (id) VALUES (%s);")
-                    cur.execute(SQL, data)
-                    conn.commit()
+                # post to db
+                data = [comment.id]
+                SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                cur.execute(SQL, data)
+                conn.commit()
 
-                    # grab previously-commented-on posts
-                    cur.execute("SELECT * FROM posts")
-                    records = cur.fetchall()
+                # grab previously-commented-on posts
+                cur.execute("SELECT * FROM posts")
+                records = cur.fetchall()
