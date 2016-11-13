@@ -71,6 +71,7 @@ while True:
                         text_model = markovify.Text(comments)
                         sentence = text_model.make_sentence()
 
+                        time.sleep(2)
                         if sentence == None:
                             print ('markovify failed, will try again ' + comment.id)
                             break
