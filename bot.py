@@ -74,9 +74,18 @@ while True:
                         if sentence == None:
                             print ('markovify failed, will try again')
 
+                        continue
+
                     except:
-                        
+
                         print ('bad username')
+                        # post to db
+                        data = [comment.id]
+                        SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                        cur.execute(SQL, data)
+                        conn.commit()
+                        
+                        continue
 
                     elif sentence:
                         # add reply
