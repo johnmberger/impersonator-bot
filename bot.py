@@ -1,7 +1,10 @@
 import os
 import time
+
 import markovify
+
 import praw
+
 import psycopg2
 import urlparse
 
@@ -16,6 +19,7 @@ conn = psycopg2.connect(
     host=url.hostname,
     port=url.port
 )
+
 cur = conn.cursor()
 
 # reddit api wrapper connection
@@ -31,22 +35,11 @@ records = cur.fetchall()
 # bot signature
 signature = '^^beep ^^boop. ^^I\'m ^^a ^^bot.  ^^Let ^^/u/CommodoreObvious ^^know ^^if ^^something ^^is ^^wonky'
 
-# grab previously-commented-on posts
-def getPosts():
-    cur.execute("SELECT * FROM posts")
-    records = cur.fetchall()
-
-# insert new postID in db
-def insertPost(post):
-    data = [post]
-    SQL = ("INSERT INTO posts (id) VALUES (%s);")
-    cur.execute(SQL, data)
-    conn.commit()
-
-# continously scan new posts for call
 while True:
 
-    getPosts()
+    # grab previously-commented-on posts
+    cur.execute("SELECT * FROM posts")
+    records = cur.fetchall()
 
     for submission in r.get_subreddit('impersonatorbot').get_hot(limit=10):
         flat_comments = praw.helpers.flatten_tree(submission.comments)
@@ -84,19 +77,27 @@ while True:
                         comment.reply(sentence + '\n\n ******* \n\n' + signature)
 
                         # post to db
-                        insertPost(comment.id)
+                        data = [comment.id]
+                        SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                        cur.execute(SQL, data)
+                        conn.commit()
 
-                        # grab new posts
-                        getPosts()
+                        # grab previously-commented-on posts
+                        cur.execute("SELECT * FROM posts")
+                        records = cur.fetchall()
 
                         print ('posted: ' + comment.id)
 
                     else:
                         # post to db
-                        insertPost(comment.id)
+                        data = [comment.id]
+                        SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                        cur.execute(SQL, data)
+                        conn.commit()
 
-                        # grab new posts
-                        getPosts()
+                        # grab previously-commented-on posts
+                        cur.execute("SELECT * FROM posts")
+                        records = cur.fetchall()
 
                         print ('something went wrong: ' + comment.id)
 
@@ -104,7 +105,11 @@ while True:
                     comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
 
                     # post to db
-                    insertPost(comment.id)
+                    data = [comment.id]
+                    SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                    cur.execute(SQL, data)
+                    conn.commit()
 
-                    # grab new posts
-                    getPosts()
+                    # grab previously-commented-on posts
+                    cur.execute("SELECT * FROM posts")
+                    records = cur.fetchall()
