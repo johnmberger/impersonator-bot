@@ -26,7 +26,7 @@ cur = conn.cursor()
 r = praw.Reddit(user_agent='reddit impersonator 1.0')
 
 # reddit login
-r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
+r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'], disable_warning=True)
 
 # holds previously-commented on calls
 cur.execute("SELECT * FROM posts")
@@ -78,7 +78,7 @@ while True:
 
                     except:
 
-                        print ('bad username')
+                        print ('Bad Username: ' + comment.id)
                         # post to db
                         data = [comment.id]
                         SQL = ("INSERT INTO posts (id) VALUES (%s);")
@@ -116,15 +116,15 @@ while True:
 
                         print ('something went wrong: ' + comment.id)
 
-            else:
-                comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
+                else:
+                    comment.reply('Please provide a username for me to impersonate! Like this: `ImpersonatorBot! PresidentObama`' + '\n\n ******* \n\n' + signature)
 
-                # post to db
-                data = [comment.id]
-                SQL = ("INSERT INTO posts (id) VALUES (%s);")
-                cur.execute(SQL, data)
-                conn.commit()
+                    # post to db
+                    data = [comment.id]
+                    SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                    cur.execute(SQL, data)
+                    conn.commit()
 
-                # grab previously-commented-on posts
-                cur.execute("SELECT * FROM posts")
-                records = cur.fetchall()
+                    # grab previously-commented-on posts
+                    cur.execute("SELECT * FROM posts")
+                    records = cur.fetchall()
