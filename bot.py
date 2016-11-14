@@ -68,10 +68,19 @@ while True:
 
                         comments = comments.encode('ascii', 'ignore')
 
+                        if len(comments) < 3000:
+                            comment.reply('Your comment history isn\'t long enough... sorry! :/' + '\n\n ******* \n\n' + signature)
+
+                            # post to db
+                            data = [comment.id]
+                            SQL = ("INSERT INTO posts (id) VALUES (%s);")
+                            cur.execute(SQL, data)
+                            conn.commit()
+                            break
+
                         text_model = markovify.Text(comments)
                         sentence = text_model.make_sentence()
 
-                        time.sleep(2)
                         if sentence == None:
                             print ('markovify failed, will try again ' + comment.id)
                             break
