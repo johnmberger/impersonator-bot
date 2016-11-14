@@ -69,7 +69,9 @@ while True:
                         comments = comments.encode('ascii', 'ignore')
 
                         if len(comments) < 3000:
-                            comment.reply('Your comment history isn\'t long enough... sorry! :/' + '\n\n ******* \n\n' + signature)
+                            comment.reply('Your comment history isn\'t long enough... sorry! :/ Try again after posting some more!' + '\n\n ******* \n\n' + signature)
+
+                            print('not enough comment history: ' + comment.id)
 
                             # post to db
                             data = [comment.id]
